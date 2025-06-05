@@ -9,12 +9,6 @@ const navigation = {
     { name: 'FAQ', href: '/faq' },
     { name: 'Contact', href: '/contact' },
   ],
-  services: [
-    { name: 'Residential Claims', href: '/services/residential' },
-    { name: 'Commercial Claims', href: '/services/commercial' },
-    { name: 'Catastrophe Adjusting', href: '/services/catastrophe' },
-    { name: 'Claim Review', href: '/services/claim-review' },
-  ],
   social: [
     {
       name: 'Facebook',
@@ -55,8 +49,8 @@ export default function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <img
-              className="h-12 w-auto"
-              src="/logo-white.png"
+              className="h-40 w-auto"
+              src="/2.png"
               alt="Nationwide Adjusters of America"
             />
             <p className="text-sm leading-6 text-gray-300">
@@ -92,37 +86,20 @@ export default function Footer() {
                   ))}
                 </ul>
               </div>
-              <div className="mt-10 md:mt-0">
-                <h3 className="text-sm font-semibold leading-6 text-white">Services</h3>
-                <ul role="list" className="mt-6 space-y-4">
-                  {navigation.services.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className="text-sm leading-6 text-gray-300 hover:text-white"
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
             </div>
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
                 <h3 className="text-sm font-semibold leading-6 text-white">Contact Us</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   <li className="text-sm leading-6 text-gray-300">
-                    <strong>Phone:</strong> (555) 123-4567
+                    <strong>Phone:</strong> 847-239-4706
                   </li>
                   <li className="text-sm leading-6 text-gray-300">
-                    <strong>Email:</strong> info@nationwideadjusters.com
+                    <strong>Email:</strong> NWAOA02@gmail.com
                   </li>
                   <li className="text-sm leading-6 text-gray-300">
                     <strong>Address:</strong><br />
-                    123 Insurance Way<br />
-                    Suite 100<br />
-                    Anytown, USA 12345
+                    Elgin, IL
                   </li>
                 </ul>
               </div>

@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { ClipboardDocumentCheckIcon, DocumentTextIcon, CurrencyDollarIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -21,147 +22,132 @@ const staggerContainer = {
 const services = [
   {
     name: 'Residential Claims',
-    description: 'Expert handling of home insurance claims for fire, water, wind, and other damages.',
-    features: [
-      'Thorough damage assessment',
-      'Detailed documentation',
-      'Negotiation with insurance companies',
-      'Maximized settlement amounts',
-    ],
-    imageUrl: '/services/residential.jpg',
-    link: '/services/residential',
+    description: 'Expert handling of home insurance claims for water damage, fire, theft, and more.',
+    imageUrl: '/residential claims.png',
   },
   {
     name: 'Commercial Claims',
-    description: 'Comprehensive commercial property damage assessment and claim management.',
-    features: [
-      'Business interruption claims',
-      'Inventory loss evaluation',
-      'Equipment damage assessment',
-      'Loss of income analysis',
-    ],
-    imageUrl: '/services/commercial.jpg',
-    link: '/services/commercial',
+    description: 'Comprehensive commercial property damage assessment and claims management.',
+    imageUrl: '/commercial claims.png',
   },
   {
-    name: 'Catastrophe Adjusting',
+    name: 'Catastrophe Claims',
     description: 'Rapid response and expert handling of large-scale disaster claims.',
-    features: [
-      '24/7 emergency response',
-      'Large-scale damage assessment',
-      'Multi-property claims handling',
-      'Disaster recovery coordination',
-    ],
-    imageUrl: '/services/catastrophe.jpg',
-    link: '/services/catastrophe',
+    imageUrl: '/catastrophe claims.png',
   },
+]
+
+const process = [
+  {
+    title: 'Initial Assessment',
+    description: 'We evaluate your claim and develop a strategy to maximize your settlement.',
+    icon: <ClipboardDocumentCheckIcon className="h-12 w-12" />
+  },
+  {
+    title: 'Documentation',
+    description: 'We gather and prepare all necessary documentation to support your claim.',
+    icon: <DocumentTextIcon className="h-12 w-12" />
+  },
+  {
+    title: 'Negotiation',
+    description: 'Our experts negotiate with your insurance company on your behalf.',
+    icon: <CurrencyDollarIcon className="h-12 w-12" />
+  },
+  {
+    title: 'Settlement',
+    description: 'We ensure you receive the maximum settlement you deserve.',
+    icon: <CheckCircleIcon className="h-12 w-12" />
+  }
 ]
 
 export default function Services() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-r from-blue-600 to-blue-800">
-        <div className="absolute inset-0 bg-black/30" />
-        <motion.div
-          initial="initial"
-          animate="animate"
-          variants={staggerContainer}
-          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
-        >
-          <motion.h1
-            variants={fadeIn}
-            className="text-4xl md:text-6xl font-bold text-white mb-6"
-          >
-            Our Services
-          </motion.h1>
-          <motion.p
-            variants={fadeIn}
-            className="text-xl text-blue-100 max-w-3xl mx-auto"
-          >
-            Comprehensive insurance claims adjusting services tailored to your needs
-          </motion.p>
-        </motion.div>
+      <section className="relative bg-white dark:bg-gray-900">
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-white dark:from-gray-800/50 dark:to-gray-900"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+              Our Services
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+              Comprehensive insurance claims adjusting services tailored to your needs
+            </p>
+          </div>
+        </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-24 bg-white">
+      {/* Services Overview */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12"
-          >
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">What We Do</h2>
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
+              Expert handling of all types of property damage claims
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.map((service) => (
-              <motion.div
-                key={service.name}
-                variants={fadeIn}
-                className="group relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
-              >
-                <div className="aspect-w-16 aspect-h-9 relative">
+              <div key={service.name} className="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+                <div className="relative h-48">
                   <Image
                     src={service.imageUrl}
                     alt={service.name}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover"
                   />
                 </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">{service.name}</h3>
-                  <p className="text-gray-600 mb-6">{service.description}</p>
-                  <ul className="space-y-3 mb-8">
-                    {service.features.map((feature) => (
-                      <li key={feature} className="flex items-center text-gray-600">
-                        <svg
-                          className="h-5 w-5 text-blue-600 mr-3"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path d="M5 13l4 4L19 7" />
-                        </svg>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    href={service.link}
-                    className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300"
-                  >
-                    Learn More
-                  </Link>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{service.name}</h3>
+                  <p className="text-gray-600 dark:text-gray-300">{service.description}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section */}
+      <section className="py-16 bg-white dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Our Process</h2>
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
+              How we help you maximize your insurance claim
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {process.map((step) => (
+              <div key={step.title} className="text-center">
+                <div className="mx-auto h-12 w-12 text-blue-600 dark:text-blue-400 mb-4">
+                  {step.icon}
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{step.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300">{step.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-b from-white to-blue-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">Need Help With Your Claim?</h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Our team of experts is ready to help you navigate the claims process and maximize your settlement.
+      <section className="bg-blue-600 dark:bg-blue-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Need Help With Your Claim?
+            </h2>
+            <p className="text-xl text-blue-100 mb-8">
+              Contact us today for a free consultation
             </p>
             <Link
               href="/contact"
-              className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors duration-300"
+              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-blue-50 md:py-4 md:text-lg md:px-10"
             >
-              Get Started Today
+              Get Started
             </Link>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>

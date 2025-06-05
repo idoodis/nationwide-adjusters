@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { CheckIcon } from '@heroicons/react/24/outline'
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -22,7 +23,7 @@ const lossTypes = [
   {
     name: 'Fire Damage',
     description: 'Comprehensive handling of fire damage claims, including structural damage, smoke damage, and personal property loss.',
-    imageUrl: '/loss-types/fire.jpg',
+    imageUrl: '/Fire damage.png',
     details: [
       'Structural damage assessment',
       'Smoke and soot damage evaluation',
@@ -34,7 +35,7 @@ const lossTypes = [
   {
     name: 'Water Damage',
     description: 'Expert handling of water damage claims, from burst pipes to flood damage.',
-    imageUrl: '/loss-types/water.jpg',
+    imageUrl: '/Water Damage.png',
     details: [
       'Water source identification',
       'Mold assessment and remediation',
@@ -46,7 +47,7 @@ const lossTypes = [
   {
     name: 'Wind & Hail',
     description: 'Professional assessment of wind and hail damage claims for residential and commercial properties.',
-    imageUrl: '/loss-types/wind.jpg',
+    imageUrl: '/Wind and Hail.png',
     details: [
       'Roof damage assessment',
       'Siding and exterior damage',
@@ -58,7 +59,7 @@ const lossTypes = [
   {
     name: 'Theft & Vandalism',
     description: 'Thorough handling of theft and vandalism claims, including property damage and stolen items.',
-    imageUrl: '/loss-types/theft.jpg',
+    imageUrl: '/Theft and Vandalism.png',
     details: [
       'Property damage assessment',
       'Stolen item documentation',
@@ -70,7 +71,7 @@ const lossTypes = [
   {
     name: 'Business Interruption',
     description: 'Comprehensive handling of business interruption claims, ensuring compensation for lost income and expenses.',
-    imageUrl: '/loss-types/business.jpg',
+    imageUrl: '/Business interruption.png',
     details: [
       'Lost income calculation',
       'Extra expense documentation',
@@ -82,7 +83,7 @@ const lossTypes = [
   {
     name: 'Natural Disasters',
     description: 'Expert handling of claims resulting from natural disasters such as hurricanes, earthquakes, and tornadoes.',
-    imageUrl: '/loss-types/natural.jpg',
+    imageUrl: '/Natural Disasters.png',
     details: [
       'Large-scale damage assessment',
       'Emergency response coordination',
@@ -97,101 +98,69 @@ export default function TypesOfLoss() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-r from-blue-600 to-blue-800">
-        <div className="absolute inset-0 bg-black/30" />
-        <motion.div
-          initial="initial"
-          animate="animate"
-          variants={staggerContainer}
-          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
-        >
-          <motion.h1
-            variants={fadeIn}
-            className="text-4xl md:text-6xl font-bold text-white mb-6"
-          >
-            Types of Loss We Handle
-          </motion.h1>
-          <motion.p
-            variants={fadeIn}
-            className="text-xl text-blue-100 max-w-3xl mx-auto"
-          >
-            Our experienced team handles all types of insurance claims with expertise and dedication
-          </motion.p>
-        </motion.div>
+      <section className="relative bg-white dark:bg-gray-900">
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-white dark:from-gray-800/50 dark:to-gray-900"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+              Types of Loss We Handle
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+              Expert handling of all types of property damage claims
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* Loss Types Grid */}
-      <section className="py-24 bg-white">
+      <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {lossTypes.map((loss) => (
-              <motion.div
-                key={loss.name}
-                variants={fadeIn}
-                className="group relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
-              >
-                <div className="aspect-w-16 aspect-h-9 relative">
+              <div key={loss.name} className="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+                <div className="relative h-48">
                   <Image
                     src={loss.imageUrl}
                     alt={loss.name}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover"
                   />
                 </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">{loss.name}</h3>
-                  <p className="text-gray-600 mb-6">{loss.description}</p>
-                  <ul className="space-y-3">
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{loss.name}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">{loss.description}</p>
+                  <ul className="space-y-2">
                     {loss.details.map((detail) => (
-                      <li key={detail} className="flex items-center text-gray-600">
-                        <svg
-                          className="h-5 w-5 text-blue-600 mr-3"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path d="M5 13l4 4L19 7" />
-                        </svg>
+                      <li key={detail} className="flex items-center text-gray-600 dark:text-gray-300">
+                        <CheckIcon className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-2" />
                         {detail}
                       </li>
                     ))}
                   </ul>
                 </div>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-b from-white to-blue-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">Need Help With Your Claim?</h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Our team of experts is ready to help you navigate the claims process and maximize your settlement.
+      <section className="bg-blue-600 dark:bg-blue-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Need Help With Your Claim?
+            </h2>
+            <p className="text-xl text-blue-100 mb-8">
+              Contact us today for a free consultation
             </p>
             <Link
               href="/contact"
-              className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors duration-300"
+              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-blue-50 md:py-4 md:text-lg md:px-10"
             >
-              Contact Us Today
+              Get Started
             </Link>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>
