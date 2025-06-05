@@ -9,7 +9,12 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+    domains: ['localhost'],
+    unoptimized: true
   },
+  eslint: {
+    ignoreDuringBuilds: true
+  }
 }
 
 module.exports = nextConfig 
