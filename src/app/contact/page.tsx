@@ -184,7 +184,7 @@ export default function Contact() {
             <div className="text-center">
               <PhoneIcon className="mx-auto h-12 w-12 text-blue-600 dark:text-blue-400" />
               <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-white">Phone</h3>
-              <p className="mt-2 text-gray-600 dark:text-gray-300">847-239-4706</p>
+              <p className="mt-2 text-gray-600 dark:text-gray-300">224-745-6559</p>
             </div>
             <div className="text-center">
               <EnvelopeIcon className="mx-auto h-12 w-12 text-blue-600 dark:text-blue-400" />
@@ -195,7 +195,9 @@ export default function Contact() {
               <MapPinIcon className="mx-auto h-12 w-12 text-blue-600 dark:text-blue-400" />
               <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-white">Address</h3>
               <p className="mt-2 text-gray-600 dark:text-gray-300">
-                Elgin, IL
+                25 S Grove Ave<br />
+                Elgin, IL 60120<br />
+                Ste 306
               </p>
             </div>
           </div>

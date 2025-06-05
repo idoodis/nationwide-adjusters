@@ -92,14 +92,16 @@ export default function Footer() {
                 <h3 className="text-sm font-semibold leading-6 text-white">Contact Us</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   <li className="text-sm leading-6 text-gray-300">
-                    <strong>Phone:</strong> 847-239-4706
+                    <strong>Phone:</strong> 224-745-6559
                   </li>
                   <li className="text-sm leading-6 text-gray-300">
                     <strong>Email:</strong> NWAOA02@gmail.com
                   </li>
                   <li className="text-sm leading-6 text-gray-300">
                     <strong>Address:</strong><br />
-                    Elgin, IL
+                    25 S Grove Ave<br />
+                    Elgin, IL 60120<br />
+                    Ste 306
                   </li>
                 </ul>
               </div>
