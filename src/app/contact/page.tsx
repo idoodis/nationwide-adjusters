@@ -35,14 +35,23 @@ export default function Contact() {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true)
     try {
-      // Here you would typically send the form data to your backend
-      console.log('Form data:', data)
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to send message')
+      }
+
       setSubmitSuccess(true)
       reset()
     } catch (error) {
       console.error('Error submitting form:', error)
+      alert('Failed to send message. Please try again or call us directly.')
     } finally {
       setIsSubmitting(false)
     }
