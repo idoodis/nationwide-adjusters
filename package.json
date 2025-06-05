@@ -16,7 +16,7 @@
     "framer-motion": "^12.12.1",
     "next": "15.1.8",
     "next-sanity": "^9.11.1",
-    "nodemailer": "^7.0.3",
+    "nodemailer": "^6.9.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.56.4",
