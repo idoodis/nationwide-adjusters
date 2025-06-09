@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { motion } from 'framer-motion'
 import { PhoneIcon, EnvelopeIcon, MapPinIcon } from '@heroicons/react/24/outline'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -28,181 +30,161 @@ type FormData = {
 }
 
 export default function Contact() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitSuccess, setSubmitSuccess] = useState(false)
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>()
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+  });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  const onSubmit = async (data: FormData) => {
-    setIsSubmitting(true)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+
     try {
-      // Here you would typically send the form data to your backend
-      console.log('Form data:', data)
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      setSubmitSuccess(true)
-      reset()
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      setStatus('success');
+      setFormData({ name: '', email: '', phone: '', message: '' });
     } catch (error) {
-      console.error('Error submitting form:', error)
-    } finally {
-      setIsSubmitting(false)
+      console.error('Error:', error);
+      setStatus('error');
     }
-  }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative bg-white dark:bg-gray-900">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-white dark:from-gray-800/50 dark:to-gray-900"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-              Contact Us
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-              Get in touch with our team of expert public adjusters
-            </p>
-          </div>
-        </div>
-      </section>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <Navigation />
+      
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Contact Us</h1>
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                required
+                value={formData.name}
+                onChange={handleChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+              />
+            </div>
 
-      {/* Contact Form Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
-              <div className="p-6 sm:p-8">
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      {...register('name', { required: 'Name is required' })}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white bg-white text-gray-900 sm:text-sm"
-                    />
-                    {errors.name && (
-                      <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
-                    )}
-                  </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+              />
+            </div>
 
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      {...register('email', {
-                        required: 'Email is required',
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: 'Invalid email address',
-                        },
-                      })}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white bg-white text-gray-900 sm:text-sm"
-                    />
-                    {errors.email && (
-                      <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-                    )}
-                  </div>
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Phone
+              </label>
+              <input
+                type="tel"
+                name="phone"
+                id="phone"
+                required
+                value={formData.phone}
+                onChange={handleChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+              />
+            </div>
 
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Phone
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      {...register('phone', { required: 'Phone number is required' })}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white bg-white text-gray-900 sm:text-sm"
-                    />
-                    {errors.phone && (
-                      <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
-                    )}
-                  </div>
+            <div>
+              <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Message
+              </label>
+              <textarea
+                name="message"
+                id="message"
+                rows={4}
+                required
+                value={formData.message}
+                onChange={handleChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+              />
+            </div>
 
-                  <div>
-                    <label htmlFor="typeOfLoss" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Type of Loss
-                    </label>
-                    <select
-                      id="typeOfLoss"
-                      {...register('typeOfLoss', { required: 'Please select a type of loss' })}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white bg-white text-gray-900 sm:text-sm"
-                    >
-                      <option value="">Select a type of loss</option>
-                      <option value="fire">Fire Damage</option>
-                      <option value="water">Water Damage</option>
-                      <option value="wind">Wind & Hail</option>
-                      <option value="theft">Theft & Vandalism</option>
-                      <option value="business">Business Interruption</option>
-                      <option value="natural">Natural Disasters</option>
-                      <option value="other">Other</option>
-                    </select>
-                    {errors.typeOfLoss && (
-                      <p className="mt-1 text-sm text-red-600">{errors.typeOfLoss.message}</p>
-                    )}
-                  </div>
+            <div>
+              <button
+                type="submit"
+                disabled={status === 'loading'}
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              >
+                {status === 'loading' ? 'Sending...' : 'Send Message'}
+              </button>
+            </div>
 
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      rows={4}
-                      {...register('message', { required: 'Message is required' })}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white bg-white text-gray-900 sm:text-sm"
-                    />
-                    {errors.message && (
-                      <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>
-                    )}
+            {status === 'success' && (
+              <div className="rounded-md bg-green-50 p-4">
+                <div className="flex">
+                  <div className="flex-shrink-0">
+                    <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
                   </div>
-
-                  <div>
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {isSubmitting ? 'Sending...' : 'Send Message'}
-                    </button>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-green-800">
+                      Message sent successfully! We'll get back to you soon.
+                    </p>
                   </div>
-                </form>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
+            )}
 
-      {/* Contact Info Section */}
-      <section className="py-16 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <PhoneIcon className="mx-auto h-12 w-12 text-blue-600 dark:text-blue-400" />
-              <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-white">Phone</h3>
-              <p className="mt-2 text-gray-600 dark:text-gray-300">224-745-6559</p>
-            </div>
-            <div className="text-center">
-              <EnvelopeIcon className="mx-auto h-12 w-12 text-blue-600 dark:text-blue-400" />
-              <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-white">Email</h3>
-              <p className="mt-2 text-gray-600 dark:text-gray-300">NWAOA02@gmail.com</p>
-            </div>
-            <div className="text-center">
-              <MapPinIcon className="mx-auto h-12 w-12 text-blue-600 dark:text-blue-400" />
-              <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-white">Address</h3>
-              <p className="mt-2 text-gray-600 dark:text-gray-300">
-                25 S Grove Ave<br />
-                Elgin, IL 60120<br />
-                Ste 306
-              </p>
-            </div>
-          </div>
+            {status === 'error' && (
+              <div className="rounded-md bg-red-50 p-4">
+                <div className="flex">
+                  <div className="flex-shrink-0">
+                    <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-red-800">
+                      Failed to send message. Please try again later.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </form>
         </div>
-      </section>
+      </main>
+
+      <Footer />
     </div>
   )
 } 
